@@ -8,9 +8,10 @@ namespace Booking.DAL.Data
 {
     public class BookingContext : IdentityDbContext<UserEntity, RoleEntity, int>
     {
-        public DbSet<Apartment> Apartments { get; set; }
-        public DbSet<ApartmentPhoto> ApartmentPhotos { get; set; }
-        public DbSet<ApartmentDetails> ApartmentDetails { get; set; }
+        public DbSet<ApartmentEntity> Apartments { get; set; }
+        public DbSet<ApartmentPhotoEntity> ApartmentPhotos { get; set; }
+        public DbSet<ApartmentDetailsEntity> ApartmentDetails { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
 
         public BookingContext(DbContextOptions<BookingContext> options):
             base(options)

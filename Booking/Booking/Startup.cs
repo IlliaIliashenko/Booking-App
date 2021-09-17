@@ -15,8 +15,12 @@ using Booking.BLL.Permission;
 using Booking.BLL.Policy;
 using Booking.BLL.Services.Authentication;
 using Booking.BLL.Services.Authentication.Interfaces;
+using Booking.BLL.Services.Booking;
+using Booking.BLL.Services.Booking.Interfaces;
 using Booking.Configuration;
 using Booking.DAL.Data;
+using Booking.DAL.Data.Repositories;
+using Booking.DAL.Data.Repositories.Interfaces;
 using Booking.DAL.Models.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -51,15 +55,21 @@ namespace Booking
             services.AddCors(options => options.AddDefaultPolicy(builder =>
                 builder.AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowAnyOrigin()));
-                    //.AllowCredentials()));
-            //.WithOrigins("http://localhost:3000")
+                    .WithOrigins("http://localhost:3000")
+                    .AllowCredentials()));
 
             services.AddScoped<ITokenBuilder, TokenBuilder>();
             services.AddScoped<ITokenDecoder, TokenDecoder>();
             services.AddScoped<ISignInManager, IdentitySignInManager>();
             services.AddScoped<IUserManager, IdentityUserManager>();
             services.AddScoped<IAuthOption, AuthOption>();
+
+            services.AddScoped<IApartmentPhotoRepository,ApartmentPhotoRepository>();
+            services.AddScoped<IApartmentRepository, ApartmentRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
+            services.AddScoped<IApartmentPhotoService, ApartmentPhotoService>();
+            services.AddScoped<IApartmentService, ApartmentService>();
 
 
             services.AddAutoMapper(AutoMapperConfiguration.GetAutoMapperProfilesFromAllAssemblies().ToArray());

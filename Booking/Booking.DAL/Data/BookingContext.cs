@@ -23,6 +23,9 @@ namespace Booking.DAL.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
             modelBuilder.ApplyConfiguration(new RoleClaimsConfiguration());
+            modelBuilder.ApplyConfiguration(new ApartmentDetailsConfiguration());
+            modelBuilder.ApplyConfiguration(new ApartmentEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ApartmentPhotoConfiguration());
         }
     }
 }

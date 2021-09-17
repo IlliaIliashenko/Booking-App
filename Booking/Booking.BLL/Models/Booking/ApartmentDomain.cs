@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Booking.BLL.Services.Booking
+
+namespace Booking.BLL.Models.Booking
 {
     public class ApartmentDomain
     {

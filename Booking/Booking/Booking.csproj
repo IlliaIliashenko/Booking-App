@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Booking.DAL\Booking.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ApartmentPhotos\" />
+  </ItemGroup>
+
 </Project>

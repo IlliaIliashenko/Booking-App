@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Booking.BLL.Services.Booking
+﻿namespace Booking.BLL.Models.Booking
 {
-    public class OrderDomain
+    public class ApartmentPhotoDomain
     {
         public int Id { get; set; }
-        public DateTime Date { get; set; }
+        public string Path { get; set; }
 
         public int ApartmentId { get; set; }
         public ApartmentDomain Apartment { get; set; }

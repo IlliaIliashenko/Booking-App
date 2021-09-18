@@ -2,7 +2,7 @@
 
 namespace Booking.BLL.Models.Booking
 {
-    public class OrderDomain
+    public class AppointmentDomain
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

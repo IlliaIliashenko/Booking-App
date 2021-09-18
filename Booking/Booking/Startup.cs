@@ -120,6 +120,8 @@ namespace Booking
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseAuthentication();

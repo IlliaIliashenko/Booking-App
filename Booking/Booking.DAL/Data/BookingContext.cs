@@ -10,8 +10,9 @@ namespace Booking.DAL.Data
     {
         public DbSet<ApartmentEntity> Apartments { get; set; }
         public DbSet<ApartmentPhotoEntity> ApartmentPhotos { get; set; }
-        public DbSet<ApartmentDetailsEntity> ApartmentDetails { get; set; }
-        public DbSet<OrderEntity> Orders { get; set; }
+        public DbSet<DetailsToApartmentEntity> ApartmentDetails { get; set; }
+        public DbSet<DetailsEntity> DetailsEntities { get; set; }
+        public DbSet<AppointmentEntity> Appointments { get; set; }
 
         public BookingContext(DbContextOptions<BookingContext> options):
             base(options)
@@ -26,6 +27,7 @@ namespace Booking.DAL.Data
             modelBuilder.ApplyConfiguration(new ApartmentDetailsConfiguration());
             modelBuilder.ApplyConfiguration(new ApartmentEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ApartmentPhotoConfiguration());
+            modelBuilder.ApplyConfiguration(new ApartmentToDetailsConfiguration());
         }
     }
 }

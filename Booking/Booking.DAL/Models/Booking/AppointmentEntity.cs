@@ -2,7 +2,7 @@
 
 namespace Booking.DAL.Models.Booking
 {
-    public class OrderEntity
+    public class AppointmentEntity
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

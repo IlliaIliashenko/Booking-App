@@ -9,7 +9,7 @@ namespace Booking.DAL.Models.Booking
         public decimal Price { get; set; }
 
         public IEnumerable<ApartmentPhotoEntity> ApartmentPhotos { get;set; }
-        public IEnumerable<OrderEntity> Orders { get;set; }
-        public ApartmentDetailsEntity Details { get; set; }
+        public IEnumerable<AppointmentEntity> AppointmentEntities { get;set; }
+        public IEnumerable<DetailsToApartmentEntity> DetailsToApartmentEntities { get; set; }
     }
 }

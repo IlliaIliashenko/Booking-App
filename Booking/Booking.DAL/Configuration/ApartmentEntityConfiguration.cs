@@ -14,6 +14,12 @@ namespace Booking.DAL.Configuration
                     Id = 1,
                     Name = "Аренда VIP 2-ух комнатной квартиры в Новострое",
                     Price = 9500
+                },
+                new ApartmentEntity()
+                {
+                    Id = 2,
+                    Name = "Аренда 3-x комнатной квартиры в центре",
+                    Price = 15500
                 });
         }
     }

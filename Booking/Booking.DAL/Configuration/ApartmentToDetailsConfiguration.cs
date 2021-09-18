@@ -36,6 +36,34 @@ namespace Booking.DAL.Configuration
                     ApartmentEntityId = 1,
                     DetailsEntityId = 4,
                     Value = "87"
+                },
+                new DetailsToApartmentEntity()
+                {
+                    Id = 5,
+                    ApartmentEntityId = 2,
+                    DetailsEntityId = 1,
+                    Value = "Сумська вулиця, 18-а, Харків, Харківська область, 61106"
+                },
+                new DetailsToApartmentEntity()
+                {
+                    Id = 6,
+                    ApartmentEntityId = 2,
+                    DetailsEntityId = 2,
+                    Value = "3"
+                },
+                new DetailsToApartmentEntity()
+                {
+                    Id = 7,
+                    ApartmentEntityId = 2,
+                    DetailsEntityId = 3,
+                    Value = "3"
+                },
+                new DetailsToApartmentEntity()
+                {
+                    Id = 8,
+                    ApartmentEntityId = 2,
+                    DetailsEntityId = 4,
+                    Value = "105"
                 });
         }
     }

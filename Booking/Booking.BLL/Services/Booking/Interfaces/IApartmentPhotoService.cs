@@ -5,6 +5,6 @@ namespace Booking.BLL.Services.Booking.Interfaces
 {
     public interface IApartmentPhotoService
     {
-        Task<IEnumerable<string>> GetApartmentPhotoPath(int id);
+        Task<IEnumerable<string>> GetApartmentPhotoPathAsync(int id);
     }
 }

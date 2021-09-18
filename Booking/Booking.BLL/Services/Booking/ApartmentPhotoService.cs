@@ -12,6 +12,7 @@ namespace Booking.BLL.Services.Booking
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IApartmentPhotoRepository _apartmentPhotoRepository;
+        private readonly string _baseUrl = "https://localhost:44309/";
 
         public ApartmentPhotoService(
             IWebHostEnvironment hostingEnvironment, 
@@ -21,11 +22,12 @@ namespace Booking.BLL.Services.Booking
             _apartmentPhotoRepository = apartmentPhotoRepository;
         }
 
-        public async Task<IEnumerable<string>> GetApartmentPhotoPath(int id)
+        public async Task<IEnumerable<string>> GetApartmentPhotoPathAsync(int id)
         {
             var photoPathOriginal = await _apartmentPhotoRepository.GetApartmentPhotoPath(id);
 
-            var photoPathRelative = photoPathOriginal.Select(p => Path.Combine(_hostingEnvironment.WebRootPath, p));
+           //var photoPathRelative = photoPathOriginal.Select(p => Path.Combine(_hostingEnvironment.WebRootPath, p));
+            var photoPathRelative = photoPathOriginal.Select(p => Path.Combine(_baseUrl, p));
 
             return photoPathRelative;
         }

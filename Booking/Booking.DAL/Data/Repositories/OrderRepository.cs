@@ -16,10 +16,10 @@ namespace Booking.DAL.Data.Repositories
             _bookingContext = bookingContext;
         }
 
-        public async Task<IEnumerable<OrderEntity>> GetAllOrdersAsync()
+        public async Task<IEnumerable<AppointmentEntity>> GetAllOrdersAsync()
         {
            var orders = await _bookingContext
-               .Orders
+               .Appointments
                .AsNoTracking()
                .ToListAsync();
 
@@ -28,25 +28,25 @@ namespace Booking.DAL.Data.Repositories
 
         public async Task CreateOrderAsync(int apartmentId)
         {
-            var order = new OrderEntity()
+            var order = new AppointmentEntity()
             {
                 Date = DateTime.UtcNow,
                 ApartmentId = apartmentId
             };
 
-            await _bookingContext.Orders.AddAsync(order);
+            await _bookingContext.Appointments.AddAsync(order);
             await _bookingContext.SaveChangesAsync();
         }
 
         public async Task DeleteOrderAsync(int Id)
         {
-            var order = await _bookingContext.Orders.FindAsync(Id);
+            var order = await _bookingContext.Appointments.FindAsync(Id);
 
-            _bookingContext.Orders.Remove(order);
+            _bookingContext.Appointments.Remove(order);
             await _bookingContext.SaveChangesAsync();
         }
 
-        public async Task EditOrderAsync(OrderEntity order)
+        public async Task EditOrderAsync(AppointmentEntity order)
         { 
             _bookingContext.Update(order);
 

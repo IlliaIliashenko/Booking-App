@@ -6,9 +6,9 @@ namespace Booking.DAL.Data.Repositories.Interfaces
 {
     public interface IOrderRepository
     {
-        Task<IEnumerable<OrderEntity>> GetAllOrdersAsync();
+        Task<IEnumerable<AppointmentEntity>> GetAllOrdersAsync();
         Task CreateOrderAsync(int apartmentId);
         Task DeleteOrderAsync(int Id);
-        Task EditOrderAsync(OrderEntity order);
+        Task EditOrderAsync(AppointmentEntity order);
     }
 }

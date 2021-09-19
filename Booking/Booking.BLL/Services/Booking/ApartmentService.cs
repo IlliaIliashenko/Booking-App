@@ -20,9 +20,9 @@ namespace Booking.BLL.Services.Booking
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ApartmentWithDetailsDomain>> GetAllApartmentsAsync()
+        public async Task<IEnumerable<ApartmentWithDetailsDomain>> GetAllApartmentsAsync(string filterOption)
         {
-            var apartmentEntities = await _apartmentRepository.GetAllApartmentsAsync();
+            var apartmentEntities = await _apartmentRepository.GetAllApartmentsAsync(filterOption);
             var mappedApartments = _mapper.Map<IEnumerable<ApartmentWithDetailsDomain>>(apartmentEntities);
 
             return mappedApartments;

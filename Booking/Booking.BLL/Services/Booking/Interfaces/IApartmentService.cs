@@ -6,7 +6,7 @@ namespace Booking.BLL.Services.Booking.Interfaces
 {
     public interface IApartmentService
     {
-        Task<IEnumerable<ApartmentWithDetailsDomain>> GetAllApartmentsAsync();
+        Task<IEnumerable<ApartmentWithDetailsDomain>> GetAllApartmentsAsync(string filterOption);
         Task<IEnumerable<ApartmentWithDetailsDomain>> GetApartmentByNameAsync(string name);
     }
 }

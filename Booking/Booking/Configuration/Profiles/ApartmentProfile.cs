@@ -11,6 +11,7 @@ namespace Booking.Configuration.Profiles
         public ApartmentProfile()
         {
             CreateMap<ApartmentWithDetailsDomain, ApartmentViewModel>();
+            CreateMap<AppointmentDomain, AppointmentViewModel>().ReverseMap();
         }
     }
 }

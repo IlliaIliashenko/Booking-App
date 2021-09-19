@@ -7,16 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.DAL.Data.Repositories
 {
-    public class OrderRepository : IOrderRepository
+    public class AppointmentRepository : IAppointmentRepository
     {
         private readonly BookingContext _bookingContext;
 
-        public OrderRepository(BookingContext bookingContext)
+        public AppointmentRepository(BookingContext bookingContext)
         {
             _bookingContext = bookingContext;
         }
 
-        public async Task<IEnumerable<AppointmentEntity>> GetAllOrdersAsync()
+        public async Task<IEnumerable<AppointmentEntity>> GetAllAppointmentsAsync()
         {
            var orders = await _bookingContext
                .Appointments
@@ -26,29 +26,30 @@ namespace Booking.DAL.Data.Repositories
            return orders;
         }
 
-        public async Task CreateOrderAsync(int apartmentId)
+        public async Task CreateAppointmentAsync(int apartmentId)
         {
-            var order = new AppointmentEntity()
+            var appointment = new AppointmentEntity()
             {
+                Visited = false,
                 Date = DateTime.UtcNow,
                 ApartmentId = apartmentId
             };
 
-            await _bookingContext.Appointments.AddAsync(order);
+            await _bookingContext.Appointments.AddAsync(appointment);
             await _bookingContext.SaveChangesAsync();
         }
 
-        public async Task DeleteOrderAsync(int Id)
+        public async Task DeleteAppointmentAsync(int id)
         {
-            var order = await _bookingContext.Appointments.FindAsync(Id);
+            var order = await _bookingContext.Appointments.FindAsync(id);
 
             _bookingContext.Appointments.Remove(order);
             await _bookingContext.SaveChangesAsync();
         }
 
-        public async Task EditOrderAsync(AppointmentEntity order)
+        public async Task EditAppointmentAsync(AppointmentEntity appointment)
         { 
-            _bookingContext.Update(order);
+            _bookingContext.Update(appointment);
 
             await _bookingContext.SaveChangesAsync();
         }

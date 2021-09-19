@@ -6,7 +6,7 @@ namespace Booking.DAL.Data.Repositories.Interfaces
 {
     public interface IApartmentRepository
     {
-        Task<IEnumerable<ApartmentWithDetailsEntity>> GetAllApartmentsAsync();
+        Task<IEnumerable<ApartmentWithDetailsEntity>> GetAllApartmentsAsync(string sortOption);
         Task<IEnumerable<ApartmentWithDetailsEntity>> GetApartmentByNameAsync(string name);
     }
 }

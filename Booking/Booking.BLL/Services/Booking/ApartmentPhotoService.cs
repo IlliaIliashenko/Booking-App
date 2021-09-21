@@ -10,24 +10,21 @@ namespace Booking.BLL.Services.Booking
 {
     public class ApartmentPhotoService : IApartmentPhotoService
     {
-        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IApartmentPhotoRepository _apartmentPhotoRepository;
-        private readonly string _baseUrl = "https://localhost:44309/";
+        private readonly IBaseUrlOption _baseUrlOption;
 
         public ApartmentPhotoService(
-            IWebHostEnvironment hostingEnvironment, 
-            IApartmentPhotoRepository apartmentPhotoRepository)
+            IApartmentPhotoRepository apartmentPhotoRepository, 
+            IBaseUrlOption baseUrlOption)
         {
-            _hostingEnvironment = hostingEnvironment;
             _apartmentPhotoRepository = apartmentPhotoRepository;
+            _baseUrlOption = baseUrlOption;
         }
 
         public async Task<IEnumerable<string>> GetApartmentPhotoPathAsync(int id)
         {
             var photoPathOriginal = await _apartmentPhotoRepository.GetApartmentPhotoPath(id);
-
-           //var photoPathRelative = photoPathOriginal.Select(p => Path.Combine(_hostingEnvironment.WebRootPath, p));
-            var photoPathRelative = photoPathOriginal.Select(p => Path.Combine(_baseUrl, p));
+            var photoPathRelative = photoPathOriginal.Select(p => Path.Combine(_baseUrlOption.BaseUrl, p));
 
             return photoPathRelative;
         }

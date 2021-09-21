@@ -6,13 +6,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Booking.BLL.Models.Booking;
+using Booking.BLL.Policy;
 using Booking.BLL.Services.Booking.Interfaces;
 using Booking.Models.Booking;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = PolicyTypes.Users.View)]
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;

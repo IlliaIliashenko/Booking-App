@@ -6,6 +6,7 @@ namespace Booking.Models.Booking
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public bool Visited { get; set; }
         public int ApartmentId { get; set; }
     }
 }

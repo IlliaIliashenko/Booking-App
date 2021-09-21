@@ -14,19 +14,11 @@ namespace Booking.BLL.Configuration.Profiles
             CreateMap<ApartmentWithDetailsEntity, ApartmentWithDetailsDomain>();
             CreateMap<DetailsEntity,DetailsDomain>()
                 .ForMember(u => u.DetailsToApartmentDomains, 
-                    opts => opts.MapFrom(u => u.DetailsToApartmentEntities));
+                    opts => opts.MapFrom(u => u.DetailsToApartment));
             CreateMap<ApartmentEntity, ApartmentDomain>()
                 .ForMember(u => u.DetailsToApartmentDomains, 
-                    opts => opts.MapFrom(u => u.DetailsToApartmentEntities));
-            CreateMap<DetailsToApartmentEntity,DetailsToApartmentDomain>()
-                .ForMember(u => u.Apartment, 
-                    opts => opts.MapFrom(u => u.ApartmentEntity))
-                .ForMember(u => u.ApartmentId, 
-                    opts => opts.MapFrom(u => u.ApartmentEntityId))
-                .ForMember(u => u.Details, 
-                    opts => opts.MapFrom(u => u.DetailsEntity))
-                .ForMember(u => u.DetailsId, 
-                    opts => opts.MapFrom(u => u.DetailsEntityId));
+                    opts => opts.MapFrom(u => u.DetailsToApartment));
+            CreateMap<DetailsToApartmentEntity, DetailsToApartmentDomain>();
         }
     }
 }

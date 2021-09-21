@@ -24,16 +24,16 @@ namespace Booking.BLL.Services.Authentication
 
         public async Task<OperationResult<int>> CreateUser(CreateUserModelDomain createUserModel)
         {
-            UserEntity userEntity = _mapper.Map<UserEntity>(createUserModel);
+            var userEntity = _mapper.Map<UserEntity>(createUserModel);
 
-            IdentityResult identityResult = await _userManager.CreateAsync(userEntity, userEntity.PasswordHash);
+            var identityResult = await _userManager.CreateAsync(userEntity, userEntity.PasswordHash);
 
             if (!identityResult.Succeeded)
             {
                 return OperationResult<int>.FromError(identityResult.Errors.FirstOrDefault()?.Description);
             }
 
-            IdentityResult roleResult = await _userManager.AddToRoleAsync(userEntity, RoleConstants.DefaultUserRole);
+            var roleResult = await _userManager.AddToRoleAsync(userEntity, RoleConstants.DefaultUserRole);
 
             if (!roleResult.Succeeded)
             {

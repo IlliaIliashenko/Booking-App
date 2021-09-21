@@ -22,7 +22,7 @@ namespace Booking.BLL.Services.Authentication
 
         public async Task<ClaimsIdentity> GetIdentityAsync(string login, string password)
         {
-            SignInResult result = await _signInManager.PasswordSignInAsync(login, password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(login, password, false, false);
 
             if (result.Succeeded)
             {
@@ -34,9 +34,9 @@ namespace Booking.BLL.Services.Authentication
 
         public async Task<ClaimsIdentity> GetIdentityByNameAsync(string login)
         {
-            UserEntity user = await _signInManager.UserManager.FindByNameAsync(login);
+            var user = await _signInManager.UserManager.FindByNameAsync(login);
 
-            List<Claim> claims = new List<Claim>
+            var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login)
             };
@@ -54,7 +54,7 @@ namespace Booking.BLL.Services.Authentication
                 }
             }
 
-            ClaimsIdentity identity = new ClaimsIdentity(
+            var identity = new ClaimsIdentity(
                 claims,
                 "Token",
                 ClaimsIdentity.DefaultNameClaimType,

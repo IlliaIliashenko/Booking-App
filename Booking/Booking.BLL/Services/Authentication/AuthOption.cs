@@ -20,7 +20,7 @@ namespace Booking.BLL.Services.Authentication
 
         public AuthOption(IConfiguration configuration)
         {
-            _authOptionsSection = configuration.GetSection("AuthOptions");
+            _authOptionsSection = configuration.GetSection(AuthOptionsSection);
         }
 
         private string Key => _authOptionsSection.GetValue<string>(SecretKey);

@@ -10,9 +10,9 @@ namespace Booking.BLL.Services.Authentication
     {
         public string DecodeTokenClaim(string refreshToken)
         {
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            JwtSecurityToken jwtSecurityToken = handler.ReadJwtToken(refreshToken);
-            string login = jwtSecurityToken.Claims.First(c => c.Type == ClaimsIdentity.DefaultNameClaimType).Value;
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(refreshToken);
+            var login = jwtSecurityToken.Claims.First(c => c.Type == ClaimsIdentity.DefaultNameClaimType).Value;
 
             return login;
         }

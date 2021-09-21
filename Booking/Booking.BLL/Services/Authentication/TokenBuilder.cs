@@ -19,10 +19,10 @@ namespace Booking.BLL.Services.Authentication
 
         public AccessAndRefreshTokenDomain GetEncodedToken(ClaimsIdentity identity)
         {
-            DateTime utcNow = DateTime.UtcNow;
-            JwtSecurityTokenHandler jwtHandler = new JwtSecurityTokenHandler();
+            var utcNow = DateTime.UtcNow;
+            var jwtHandler = new JwtSecurityTokenHandler();
 
-            JwtSecurityToken jwt = new JwtSecurityToken(
+            var jwt = new JwtSecurityToken(
                 issuer: _authOption.Issuer,
                 audience:_authOption.Audience,
                 notBefore: utcNow,
@@ -31,15 +31,15 @@ namespace Booking.BLL.Services.Authentication
                 signingCredentials: new SigningCredentials(_authOption.SymmetricKey, algorithm:_authOption.Algorithm)
             );
 
-            JwtSecurityToken refresh = new JwtSecurityToken(
+            var refresh = new JwtSecurityToken(
                 notBefore: utcNow,
                 claims: identity.Claims.Where(c=> c.Type == ClaimsIdentity.DefaultNameClaimType),
                 expires: utcNow.AddHours(_authOption.TokenLifetimeHours),
                 signingCredentials: new SigningCredentials(_authOption.SymmetricKey, algorithm: _authOption.Algorithm)
             );
 
-            string accessToken = jwtHandler.WriteToken(jwt);
-            string refreshToken = jwtHandler.WriteToken(refresh);
+            var accessToken = jwtHandler.WriteToken(jwt);
+            var refreshToken = jwtHandler.WriteToken(refresh);
 
             return new AccessAndRefreshTokenDomain()
             {

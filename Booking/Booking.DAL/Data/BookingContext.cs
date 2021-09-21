@@ -11,7 +11,7 @@ namespace Booking.DAL.Data
         public DbSet<ApartmentEntity> Apartments { get; set; }
         public DbSet<ApartmentPhotoEntity> ApartmentPhotos { get; set; }
         public DbSet<DetailsToApartmentEntity> ApartmentDetails { get; set; }
-        public DbSet<DetailsEntity> DetailsEntities { get; set; }
+        public DbSet<DetailsEntity> Details { get; set; }
         public DbSet<AppointmentEntity> Appointments { get; set; }
 
         public BookingContext(DbContextOptions<BookingContext> options):

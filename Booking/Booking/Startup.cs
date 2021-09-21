@@ -1,16 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Booking.BLL.Permission;
 using Booking.BLL.Policy;
 using Booking.BLL.Services.Authentication;
@@ -66,10 +60,12 @@ namespace Booking
 
             services.AddScoped<IApartmentPhotoRepository,ApartmentPhotoRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
             services.AddScoped<IApartmentPhotoService, ApartmentPhotoService>();
             services.AddScoped<IApartmentService, ApartmentService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IBaseUrlOption, BaseUrlOption>();
 
 
             services.AddAutoMapper(AutoMapperConfiguration.GetAutoMapperProfilesFromAllAssemblies().ToArray());

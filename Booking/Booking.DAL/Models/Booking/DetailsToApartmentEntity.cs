@@ -5,9 +5,9 @@
         public int Id { get; set; }
         public string Value { get; set; }
 
-        public int DetailsEntityId { get; set; }
-        public DetailsEntity DetailsEntity { get; set; }
-        public int ApartmentEntityId { get; set; }
-        public ApartmentEntity ApartmentEntity { get; set; }
+        public int DetailsId { get; set; }
+        public DetailsEntity Details { get; set; }
+        public int ApartmentId { get; set; }
+        public ApartmentEntity Apartment { get; set; }
     }
 }

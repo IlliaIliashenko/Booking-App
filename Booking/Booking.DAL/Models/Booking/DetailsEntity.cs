@@ -9,6 +9,6 @@ namespace Booking.DAL.Models.Booking
         public string Name { get; set; }
         public string ValueType { get; set; }
 
-        public IEnumerable<DetailsToApartmentEntity> DetailsToApartmentEntities { get; set; }
+        public IEnumerable<DetailsToApartmentEntity> DetailsToApartment { get; set; }
     }
 }

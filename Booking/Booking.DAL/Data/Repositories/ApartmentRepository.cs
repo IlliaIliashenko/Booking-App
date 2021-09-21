@@ -20,8 +20,8 @@ namespace Booking.DAL.Data.Repositories
         {
             var apartments = _bookingContext
                 .Apartments
-                .Include(a => a.DetailsToApartmentEntities)
-                .ThenInclude(d => d.DetailsEntity)
+                .Include(a => a.DetailsToApartment)
+                .ThenInclude(d => d.Details)
                 .AsNoTracking();
 
             var sortResult = sortOption switch
@@ -40,8 +40,8 @@ namespace Booking.DAL.Data.Repositories
             var apartments = await _bookingContext
                 .Apartments
                 .Where(ap=>ap.Name.StartsWith(name))
-                .Include(a => a.DetailsToApartmentEntities)
-                .ThenInclude(d => d.DetailsEntity)
+                .Include(a => a.DetailsToApartment)
+                .ThenInclude(d => d.Details)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -53,14 +53,14 @@ namespace Booking.DAL.Data.Repositories
         private IEnumerable<ApartmentWithDetailsEntity> ConvertToModelWithDetails(
             IEnumerable<ApartmentEntity> apartments)
         {
-            var detailsList = apartments.SelectMany(a => a.DetailsToApartmentEntities,
+            var detailsList = apartments.SelectMany(a => a.DetailsToApartment,
                     (a, d) => new
                     {
                         SingleDetail = new SingleDetailEntity()
                         {
                             ApartmentId = a.Id,
-                            Type = d.DetailsEntity.ValueType,
-                            Name = d.DetailsEntity.Name,
+                            Type = d.Details.ValueType,
+                            Name = d.Details.Name,
                             Value = d.Value
                         }
                     })

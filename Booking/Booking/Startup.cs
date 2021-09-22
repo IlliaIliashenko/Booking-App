@@ -68,7 +68,11 @@ namespace Booking
             services.AddScoped<IBaseUrlOption, BaseUrlOption>();
             services.AddScoped<IPagingOption, PagingOption>();
 
-
+            services.AddStackExchangeRedisCache(option =>
+            {
+                option.Configuration = Configuration.GetConnectionString("Redis");
+                option.InstanceName = "Booking_App_";
+            });
             services.AddAutoMapper(AutoMapperConfiguration.GetAutoMapperProfilesFromAllAssemblies().ToArray());
             services.AddControllers();
 

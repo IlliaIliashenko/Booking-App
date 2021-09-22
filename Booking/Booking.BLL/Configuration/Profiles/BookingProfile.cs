@@ -11,6 +11,7 @@ namespace Booking.BLL.Configuration.Profiles
             CreateMap<AppointmentEntity, AppointmentDomain>().ReverseMap();
             CreateMap<AppointmentEntity, ApartmentWithDetailsDomain>();
             CreateMap<ApartmentPhotoEntity, ApartmentPhotoDomain>();
+            CreateMap<ApartmentRequestDomain, ApartmentRequestEntity>();
             CreateMap<ApartmentWithDetailsEntity, ApartmentWithDetailsDomain>();
             CreateMap<DetailsEntity,DetailsDomain>()
                 .ForMember(u => u.DetailsToApartmentDomains, 

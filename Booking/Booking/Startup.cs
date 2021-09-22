@@ -66,6 +66,7 @@ namespace Booking
             services.AddScoped<IApartmentService, ApartmentService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IBaseUrlOption, BaseUrlOption>();
+            services.AddScoped<IPagingOption, PagingOption>();
 
 
             services.AddAutoMapper(AutoMapperConfiguration.GetAutoMapperProfilesFromAllAssemblies().ToArray());

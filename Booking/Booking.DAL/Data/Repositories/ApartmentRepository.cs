@@ -16,21 +16,36 @@ namespace Booking.DAL.Data.Repositories
             _bookingContext = bookingContext;
         }
 
-        public async Task<IEnumerable<ApartmentWithDetailsEntity>> GetAllApartmentsAsync(string sortOption)
+        public async Task<ApartmentPerPageEntity> GetAllApartmentsAsync(ApartmentRequestEntity requestEntity)
         {
+            var apartmentCount = _bookingContext.Apartments.Count();
+
             var apartments = _bookingContext
                 .Apartments
                 .Include(a => a.DetailsToApartment)
                 .ThenInclude(d => d.Details)
                 .AsNoTracking();
 
-            var sortResult = sortOption switch
+            var sortResult = requestEntity.FilterOption switch
             {
-                "Price" => await apartments.OrderBy(a => a.Price).ToListAsync(),
-                _ => await apartments.ToListAsync()
+                "price" => await apartments
+                    .OrderBy(a => a.Price)
+                    .Skip((requestEntity.Page - 1) * requestEntity.PageSize)
+                    .Take(requestEntity.PageSize)
+                    .ToListAsync(),
+                "all" => await apartments
+                    .Skip((requestEntity.Page - 1) * requestEntity.PageSize)
+                    .Take(requestEntity.PageSize)
+                    .ToListAsync()
             };
 
-            var result = ConvertToModelWithDetails(sortResult);
+            var detailsEntities = ConvertToModelWithDetails(sortResult);
+
+            var result = new ApartmentPerPageEntity()
+            {
+                Count = apartmentCount,
+                ApartmentDetails = detailsEntities
+            };
 
             return result;
         }

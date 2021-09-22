@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Booking.BLL.Models;
 using Booking.BLL.Models.Booking;
 using Booking.BLL.Policy;
 using Booking.BLL.Services.Booking.Interfaces;
@@ -28,10 +29,10 @@ namespace Booking.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppointmentViewModel>>> GetAllAppointmentsAsync()
+        public async Task<ActionResult<IEnumerable<AppointmentResponseModel>>> GetAllAppointmentsAsync()
         {
             var domainModels = await _appointmentService.GetAllAppointmentsAsync();
-            var mappedModel = _mapper.Map<IEnumerable<AppointmentViewModel>>(domainModels);
+            var mappedModel = _mapper.Map<IEnumerable<AppointmentResponseModel>>(domainModels);
 
             return Ok(mappedModel);
         }
@@ -45,9 +46,9 @@ namespace Booking.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditAppointmentsAsync(AppointmentViewModel model)
+        public async Task<ActionResult> EditAppointmentsAsync(AppointmentEditViewModel model)
         {
-            var mappedModel = _mapper.Map<AppointmentDomain>(model);
+            var mappedModel = _mapper.Map<AppointmentEditDomain>(model);
             await _appointmentService.EditAppointmentAsync(mappedModel);
 
             return Ok();

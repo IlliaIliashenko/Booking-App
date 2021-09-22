@@ -1,5 +1,5 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
+using Booking.BLL.Models;
 using Booking.BLL.Models.Booking;
 using Booking.Models.Booking;
 
@@ -14,6 +14,8 @@ namespace Booking.Configuration.Profiles
             CreateMap<PageDomain,PageViewModel>();
             CreateMap<PaginationDomain,ResponseModel>();
             CreateMap<AppointmentDomain, AppointmentViewModel>().ReverseMap();
+            CreateMap<AppointmentResponseDomain, AppointmentResponseModel>().ReverseMap();
+            CreateMap<AppointmentEditViewModel, AppointmentEditDomain>();
         }
         
     }

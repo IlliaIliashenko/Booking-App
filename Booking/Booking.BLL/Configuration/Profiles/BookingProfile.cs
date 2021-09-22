@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Booking.BLL.Models;
 using Booking.BLL.Models.Booking;
 using Booking.DAL.Models.Booking;
 
@@ -11,7 +12,9 @@ namespace Booking.BLL.Configuration.Profiles
             CreateMap<AppointmentEntity, AppointmentDomain>().ReverseMap();
             CreateMap<AppointmentEntity, ApartmentWithDetailsDomain>();
             CreateMap<ApartmentPhotoEntity, ApartmentPhotoDomain>();
-            CreateMap<ApartmentRequestDomain, ApartmentRequestEntity>();
+            CreateMap<AppointmentResponseEntity, AppointmentResponseDomain>();
+            CreateMap<AppointmentEditDomain, AppointmentEditEntity>();
+            CreateMap<ApartmentRequestEntity, ApartmentRequestDomain>().ReverseMap();
             CreateMap<ApartmentWithDetailsEntity, ApartmentWithDetailsDomain>();
             CreateMap<DetailsEntity,DetailsDomain>()
                 .ForMember(u => u.DetailsToApartmentDomains, 

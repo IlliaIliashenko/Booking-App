@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Booking.BLL.Models;
 using Booking.BLL.Models.Booking;
 using Booking.BLL.Services.Booking.Interfaces;
 using Booking.DAL.Data.Repositories.Interfaces;
@@ -13,16 +14,18 @@ namespace Booking.BLL.Services.Booking
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IMapper _mapper;
 
-        public AppointmentService( IMapper mapper, IAppointmentRepository appointmentRepository)
+        public AppointmentService( 
+            IMapper mapper, 
+            IAppointmentRepository appointmentRepository)
         {
             _mapper = mapper;
             _appointmentRepository = appointmentRepository;
         }
 
-        public async Task<IEnumerable<AppointmentDomain>> GetAllAppointmentsAsync()
+        public async Task<IEnumerable<AppointmentResponseDomain>> GetAllAppointmentsAsync()
         {
             var appointmentEntities = await _appointmentRepository.GetAllAppointmentsAsync();
-            var mappedAppointments = _mapper.Map<IEnumerable<AppointmentDomain>>(appointmentEntities);
+            var mappedAppointments = _mapper.Map<IEnumerable<AppointmentResponseDomain>>(appointmentEntities);
 
             return mappedAppointments;
         }
@@ -37,9 +40,9 @@ namespace Booking.BLL.Services.Booking
             await _appointmentRepository.DeleteAppointmentAsync(id);
         }
 
-        public async Task EditAppointmentAsync(AppointmentDomain appointment)
+        public async Task EditAppointmentAsync(AppointmentEditDomain appointment)
         {
-            var appointmentEntity = _mapper.Map<AppointmentEntity>(appointment);
+            var appointmentEntity = _mapper.Map<AppointmentEditEntity>(appointment);
             await _appointmentRepository.EditAppointmentAsync(appointmentEntity);
         }
     }

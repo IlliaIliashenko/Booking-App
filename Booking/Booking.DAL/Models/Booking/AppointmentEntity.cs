@@ -1,4 +1,5 @@
 ﻿using System;
+using Booking.DAL.Models.Authentication;
 
 namespace Booking.DAL.Models.Booking
 {
@@ -8,6 +9,8 @@ namespace Booking.DAL.Models.Booking
         public DateTime Date { get; set; }
         public bool Visited { get; set; }
 
+        public int UserId { get; set; }
+        public UserEntity User { get; set; }
         public int ApartmentId { get; set; }
         public ApartmentEntity Apartment { get; set; }
     }

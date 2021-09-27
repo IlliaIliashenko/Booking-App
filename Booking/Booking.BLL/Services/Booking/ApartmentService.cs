@@ -44,12 +44,5 @@ namespace Booking.BLL.Services.Booking
             return paginationModel;
         }
 
-        public async Task<IEnumerable<ApartmentWithDetailsDomain>> GetApartmentByNameAsync(string name)
-        {
-            var apartmentEntities = await _apartmentRepository.GetApartmentByNameAsync(name);
-            var mappedApartments = _mapper.Map<IEnumerable<ApartmentWithDetailsDomain>>(apartmentEntities);
-
-            return mappedApartments;
-        }
     }
 }

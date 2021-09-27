@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Booking.DAL.Data.Repositories.Interfaces;
@@ -28,39 +29,22 @@ namespace Booking.DAL.Data.Repositories
 
             var sortResult = requestEntity.FilterOption switch
             {
-                "price" => await apartments
-                    .OrderBy(a => a.Price)
-                    .Skip((requestEntity.Page - 1) * requestEntity.PageSize)
-                    .Take(requestEntity.PageSize)
-                    .ToListAsync(),
-                "all" => await apartments
-                    .Skip((requestEntity.Page - 1) * requestEntity.PageSize)
-                    .Take(requestEntity.PageSize)
-                    .ToListAsync()
+                "price" =>  apartments.OrderBy(a => a.Price),
+                "all" =>  apartments,
+                _ => apartments
             };
 
-            var detailsEntities = ConvertToModelWithDetails(sortResult);
+             var pageResult = await sortResult.Skip((requestEntity.Page - 1) * requestEntity.PageSize)
+                .Take(requestEntity.PageSize)
+                .ToListAsync();
+
+            var detailsEntities = ConvertToModelWithDetails(pageResult);
 
             var result = new ApartmentPerPageEntity()
             {
                 Count = apartmentCount,
                 ApartmentDetails = detailsEntities
             };
-
-            return result;
-        }
-
-        public async Task<IEnumerable<ApartmentWithDetailsEntity>> GetApartmentByNameAsync(string name)
-        {
-            var apartments = await _bookingContext
-                .Apartments
-                .Where(ap=>ap.Name.StartsWith(name))
-                .Include(a => a.DetailsToApartment)
-                .ThenInclude(d => d.Details)
-                .AsNoTracking()
-                .ToListAsync();
-
-            var result = ConvertToModelWithDetails(apartments);
 
             return result;
         }

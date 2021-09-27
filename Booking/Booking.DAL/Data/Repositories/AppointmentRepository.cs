@@ -17,10 +17,11 @@ namespace Booking.DAL.Data.Repositories
             _bookingContext = bookingContext;
         }
 
-        public async Task<IEnumerable<AppointmentResponseEntity>> GetAllAppointmentsAsync()
+        public async Task<IEnumerable<AppointmentResponseEntity>> GetAllAppointmentsAsync(int id)
         {
             var orders = await _bookingContext
                 .Appointments
+                .Where(a=>a.UserId == id)
                 .Include(a => a.Apartment)
                 .AsNoTracking()
                 .Select(a => new AppointmentResponseEntity()
@@ -34,13 +35,14 @@ namespace Booking.DAL.Data.Repositories
             return orders;
         }
 
-        public async Task CreateAppointmentAsync(int apartmentId)
+        public async Task CreateAppointmentAsync(AppointmentCreateEntity model)
         {
             var appointment = new AppointmentEntity()
             {
                 Visited = false,
                 Date = DateTime.UtcNow,
-                ApartmentId = apartmentId
+                ApartmentId = model.ApartmentId,
+                UserId = model.UserId
             };
 
             await _bookingContext.Appointments.AddAsync(appointment);

@@ -38,7 +38,8 @@ namespace Booking.BLL.Services.Authentication
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             var userRoles = await _signInManager.UserManager.GetRolesAsync(user);

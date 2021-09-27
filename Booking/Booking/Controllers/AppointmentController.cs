@@ -8,8 +8,9 @@ using AutoMapper;
 using Booking.BLL.Models;
 using Booking.BLL.Models.Booking;
 using Booking.BLL.Policy;
+using Booking.BLL.Services.Authentication.Interfaces;
 using Booking.BLL.Services.Booking.Interfaces;
-using Booking.Extensions;
+using Booking.Models;
 using Booking.Models.Booking;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
@@ -23,45 +24,51 @@ namespace Booking.Controllers
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
-        private readonly IDistributedCache _cache;
-        private readonly string _recordKey = "appointments";
+        private readonly IUserService _userService;
+
 
         public AppointmentController(
             IAppointmentService appointmentService, 
             IMapper mapper, 
-            IDistributedCache cache)
+            IUserService userService)
         {
             _appointmentService = appointmentService;
             _mapper = mapper;
-            _cache = cache;
+            _userService = userService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppointmentResponseModel>>> GetAllAppointmentsAsync()
         {
-            var appointments = await _cache.GetRecordAsync<IEnumerable<AppointmentResponseDomain>>(_recordKey);
-            if (appointments is null)
-            {
-                appointments = await _appointmentService.GetAllAppointmentsAsync();
-                await _cache.SetRecordAsync(_recordKey, appointments);
-            }
+            var userId = _userService.GetCurrentUserId().Result;
+            var appointments = await _appointmentService.GetAllAppointmentsAsync(userId);
+          
             var mappedModel = _mapper.Map<IEnumerable<AppointmentResponseModel>>(appointments);
 
             return Ok(mappedModel);
         }
 
-        [HttpPost("{apartmentId}")]
-        public async Task<ActionResult> CreateAppointmentsAsync(int apartmentId)
+        [HttpPost]
+        public async Task<ActionResult> CreateAppointmentsAsync(AppointmentCreateModel model)
         {
-            await _appointmentService.CreateAppointmentAsync(apartmentId);
+             var userId = _userService.GetCurrentUserId().Result;
+            model.UserId = userId;
+
+            var mappedModel = _mapper.Map<AppointmentCreateDomain>(model);
+
+            await _appointmentService.CreateAppointmentAsync(mappedModel);
 
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> EditAppointmentsAsync(AppointmentEditViewModel model)
         {
+            var userId = _userService.GetCurrentUserId().Result;
+            model.UserId = userId;
+
             var mappedModel = _mapper.Map<AppointmentEditDomain>(model);
+
             await _appointmentService.EditAppointmentAsync(mappedModel);
 
             return Ok();
@@ -70,7 +77,8 @@ namespace Booking.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAppointmentsAsync(int id)
         {
-            await _appointmentService.DeleteAppointmentAsync(id);
+            var userId = _userService.GetCurrentUserId().Result;
+            await _appointmentService.DeleteAppointmentAsync(new DeleteDomainModel(){Id = id,UserId = userId});
 
             return Ok();
         }

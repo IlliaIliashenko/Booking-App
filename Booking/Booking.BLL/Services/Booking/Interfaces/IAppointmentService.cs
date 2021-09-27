@@ -7,9 +7,9 @@ namespace Booking.BLL.Services.Booking.Interfaces
 {
     public interface IAppointmentService
     {
-        Task<IEnumerable<AppointmentResponseDomain>> GetAllAppointmentsAsync();
-        Task CreateAppointmentAsync(int apartmentId);
-        Task DeleteAppointmentAsync(int id);
+        Task<IEnumerable<AppointmentResponseDomain>> GetAllAppointmentsAsync(string userId);
+        Task CreateAppointmentAsync(AppointmentCreateDomain model);
+        Task DeleteAppointmentAsync(DeleteDomainModel model);
         Task EditAppointmentAsync(AppointmentEditDomain appointment);
     }
 }

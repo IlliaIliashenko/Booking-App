@@ -11,6 +11,8 @@ using Booking.BLL.Services.Authentication;
 using Booking.BLL.Services.Authentication.Interfaces;
 using Booking.BLL.Services.Booking;
 using Booking.BLL.Services.Booking.Interfaces;
+using Booking.BLL.Services.Cache;
+using Booking.BLL.Services.Cache.Interfaces;
 using Booking.Configuration;
 using Booking.DAL.Data;
 using Booking.DAL.Data.Repositories;
@@ -57,6 +59,7 @@ namespace Booking
             services.AddScoped<ISignInManager, IdentitySignInManager>();
             services.AddScoped<IUserManager, IdentityUserManager>();
             services.AddScoped<IAuthOption, AuthOption>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IApartmentPhotoRepository,ApartmentPhotoRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
@@ -68,11 +71,15 @@ namespace Booking
             services.AddScoped<IBaseUrlOption, BaseUrlOption>();
             services.AddScoped<IPagingOption, PagingOption>();
 
+            services.AddHttpContextAccessor();
+
+
             services.AddStackExchangeRedisCache(option =>
             {
                 option.Configuration = Configuration.GetConnectionString("Redis");
                 option.InstanceName = "Booking_App_";
             });
+            services.AddScoped<ICacheService, CacheService>();
             services.AddAutoMapper(AutoMapperConfiguration.GetAutoMapperProfilesFromAllAssemblies().ToArray());
             services.AddControllers();
 

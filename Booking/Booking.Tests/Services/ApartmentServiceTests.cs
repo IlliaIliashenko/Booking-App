@@ -29,21 +29,25 @@ namespace Booking.Tests.Services
         public async Task GetAllApartmentsAsync_ShouldReturnPaginationDomain()
         {
             //arrange
-            var apartmentWithDetails = new List<ApartmentWithDetailsEntity>() 
+            var detail1 = new DetailsEntity() {Id = 1, Name = "test"};
+            var detail2 = new DetailsEntity() {Id = 2, Name = "test2"};
+
+            var detailsToEntity = new DetailsToApartmentEntity() {Details = detail1, Id = 1, Value = "testing"};
+            var detailsToEntity2 = new DetailsToApartmentEntity() {Details = detail2, Id = 2, Value = "testing"};
+
+            var apartments = new List<ApartmentEntity>()
                 {
-                    new ApartmentWithDetailsEntity(), 
-                    new ApartmentWithDetailsEntity()
+                    new ApartmentEntity(){Id=1,DetailsToApartment = new List<DetailsToApartmentEntity>(){detailsToEntity2,detailsToEntity}},
+                    new ApartmentEntity(){Id=2,DetailsToApartment = new List<DetailsToApartmentEntity>(){detailsToEntity2,detailsToEntity}},
                 };
-            var apartmentsPerPage = new ApartmentPerPageEntity(){ApartmentDetails = apartmentWithDetails,Count = 3};
-            var pageSize = 3;
+
             var apartmentRequestDomain = new ApartmentRequestDomain();
 
             var apartmentRepositoryMock = new Mock<IApartmentRepository>();
             apartmentRepositoryMock.Setup(x => x.GetAllApartmentsAsync(It.IsAny<ApartmentRequestEntity>()))
-                .Returns(Task.FromResult<ApartmentPerPageEntity>(apartmentsPerPage));
+                .Returns(Task.FromResult<IEnumerable<ApartmentEntity>>(apartments));
 
             var pagingOptionMock = new Mock<IPagingOption>();
-            pagingOptionMock.SetupGet(o => o.PageSize).Returns(pageSize);
 
             var apartmentService = new ApartmentService(apartmentRepositoryMock.Object, _mapper, pagingOptionMock.Object);
 
@@ -53,7 +57,7 @@ namespace Booking.Tests.Services
 
             //assert
 
-            result.Apartments.Should().HaveCount(apartmentWithDetails.Count);
+            result.Apartments.Should().HaveCount(apartments.Count);
         }
     }
 }

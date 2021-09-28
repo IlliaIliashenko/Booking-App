@@ -1,6 +1,6 @@
-﻿namespace Booking.DAL.Models.Booking
+﻿namespace Booking.BLL.Models.Booking
 {
-    public class SingleDetailEntity
+    public class SingleDetailDomain
     {
         public int ApartmentId { get; set; }
         public string Value { get; set; }

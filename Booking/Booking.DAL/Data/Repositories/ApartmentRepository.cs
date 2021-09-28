@@ -17,7 +17,7 @@ namespace Booking.DAL.Data.Repositories
             _bookingContext = bookingContext;
         }
 
-        public async Task<ApartmentPerPageEntity> GetAllApartmentsAsync(ApartmentRequestEntity requestEntity)
+        public async Task<IEnumerable<ApartmentEntity>> GetAllApartmentsAsync(ApartmentRequestEntity requestEntity)
         {
             var apartmentCount = _bookingContext.Apartments.Count();
 
@@ -38,47 +38,15 @@ namespace Booking.DAL.Data.Repositories
                 .Take(requestEntity.PageSize)
                 .ToListAsync();
 
-            var detailsEntities = ConvertToModelWithDetails(pageResult);
-
-            var result = new ApartmentPerPageEntity()
-            {
-                Count = apartmentCount,
-                ApartmentDetails = detailsEntities
-            };
-
-            return result;
+             return pageResult;
         }
 
-        private IEnumerable<ApartmentWithDetailsEntity> ConvertToModelWithDetails(
-            IEnumerable<ApartmentEntity> apartments)
+        public Task<int> GetApartmentsCount()
         {
-            var detailsList = apartments.SelectMany(a => a.DetailsToApartment,
-                    (a, d) => new
-                    {
-                        SingleDetail = new SingleDetailEntity()
-                        {
-                            ApartmentId = a.Id,
-                            Type = d.Details.ValueType,
-                            Name = d.Details.Name,
-                            Value = d.Value
-                        }
-                    })
-                .Select(d => d.SingleDetail);
+            var apartmentCount = _bookingContext.Apartments.Count();
 
-            var result = apartments.Join(detailsList,
-                    a => a.Id,
-                    d => d.ApartmentId,
-                    (a, d) => new ApartmentWithDetailsEntity()
-                    {
-                        Id = a.Id,
-                        Price = a.Price,
-                        Name = a.Name,
-                        Details = detailsList.Where(d => d.ApartmentId == a.Id).ToDictionary(x=>x.Name,x=>x.Value)
-                    })
-                .GroupBy(a => a.Id)
-                .Select(a => a.FirstOrDefault());
-
-            return result;
+            return Task.FromResult(apartmentCount);
         }
+
     }
 }

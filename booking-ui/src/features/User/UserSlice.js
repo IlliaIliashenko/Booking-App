@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import api from '../services/api'
+import tokenService from "../services/token.service";
 import TokenService from "../services/token.service";
 
 export const login = createAsyncThunk(
@@ -35,7 +36,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         status: null,
-        isUser: false,
+        isUser: tokenService.getUser(),
     },
     reducers: {
         logout: (state, {payload}) => {
@@ -64,7 +65,7 @@ const userSlice = createSlice({
         [login.fulfilled]: (state) => {
             state.status = 'success'
             debugger
-            state.isUser = true
+            state.isUser = tokenService.getUser()
         },
         [login.rejected]: (state) => {
             state.status = 'rejected'

@@ -1,0 +1,35 @@
+body {
+  font-family: sans-serif;
+}
+
+
+body,
+h1,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  align-items: center;
+  display: flex;
+  font-size: 15px;
+  padding: 15px;
+  background-color: gainsboro;
+}
+
+
+#logo,
+nav {
+
+  flex: 1;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+}
+
+nav li {
+  list-style: none;
+}

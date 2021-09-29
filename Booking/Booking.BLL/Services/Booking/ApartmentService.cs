@@ -33,7 +33,7 @@ namespace Booking.BLL.Services.Booking
             var apartmentEntities = await _apartmentRepository.GetAllApartmentsAsync(mappedModel);
             var apartmentDomains = _mapper.Map<IEnumerable<ApartmentDomain>>(apartmentEntities);
 
-            var apartmentWithDetails = ConvertToModelWithDetails(apartmentDomains);
+            var apartmentWithDetails = _mapper.Map<IEnumerable<ApartmentWithDetailsDomain>>(apartmentDomains);
 
             var count = _apartmentRepository.GetApartmentsCount().Result;
             var pageModel = new PageDomain(count, requestModel.Page, requestModel.PageSize);
@@ -47,36 +47,5 @@ namespace Booking.BLL.Services.Booking
             return paginationModel;
         }
 
-        private IEnumerable<ApartmentWithDetailsDomain> ConvertToModelWithDetails(
-            IEnumerable<ApartmentDomain> apartmentDomains)
-        {
-            var details = apartmentDomains.SelectMany(a => a.DetailsToApartmentDomains,
-                    (a, d) => new
-                    {
-                        SingleDetail = new SingleDetailDomain()
-                        {
-                            ApartmentId = a.Id,
-                            Type = d.Details.ValueType,
-                            Name = d.Details.Name,
-                            Value = d.Value
-                        }
-                    })
-                .Select(d => d.SingleDetail);
-
-            var apartmentWithDetails = apartmentDomains.Join(details,
-                    a => a.Id,
-                    d => d.ApartmentId,
-                    (a, d) => new ApartmentWithDetailsDomain()
-                    {
-                        Id = a.Id,
-                        Price = a.Price,
-                        Name = a.Name,
-                        Details = details.Where(d => d.ApartmentId == a.Id).ToDictionary(x => x.Name, x => x.Value)
-                    })
-                .GroupBy(a => a.Id)
-                .Select(a => a.FirstOrDefault());
-
-            return apartmentWithDetails;
-        }
     }
 }

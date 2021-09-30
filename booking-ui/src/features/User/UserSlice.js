@@ -6,13 +6,11 @@ import TokenService from "../services/token.service";
 export const login = createAsyncThunk(
     'user/login',
     async (user) => {
-        debugger
         await api
             .post('/Authentication/login',user)
             .then(response => {
                 if (response.data.accessToken) {
                     TokenService.setUser(response.data);
-                    debugger;
                     user.history.push('/apartments');
                 }
             });
@@ -64,7 +62,6 @@ const userSlice = createSlice({
         },
         [login.fulfilled]: (state) => {
             state.status = 'success'
-            debugger
             state.isUser = tokenService.getUser()
         },
         [login.rejected]: (state) => {

@@ -10,7 +10,6 @@ const NavBar = () => {
 
     const selector = useSelector(selectUser);
     const isLogin =  selector.isUser;
-    debugger;
 
     return (<ul>
         <li><Link to="/Apartments">Квартиры</Link></li>

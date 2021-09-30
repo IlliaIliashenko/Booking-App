@@ -49,7 +49,6 @@ const appointmentSlice = createSlice({
         },
         [getAppointments.fulfilled]: (state,{ payload }) => {
             state.appointmentList = payload
-            debugger;
             state.status = 'success'
         },
         [getAppointments.rejected]: (state) => {

@@ -15,7 +15,6 @@ const AppartmentCard = ({ data }) => {
 
     const createOrder = (e,data) => {
         if (isLogin) {
-            debugger;
             e.preventDefault();
             let appointment = {apartmentid:data.id}
             dispatch(createAppointment(appointment))
